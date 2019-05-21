@@ -5,6 +5,10 @@ let messages = [];
 let server = net.createServer(socket => {
     clients.push(socket);
     console.log(`Client ${clients.indexOf(socket).toString()} Connected\n`);
+    messages.push(`Client ${clients.indexOf(socket).toString()} Connected.\n`);
+    fs.writeFile('data.txt', messages, 'utf8', function (err) {
+        if (err) return console.log(err);
+    });
     for (let i = 0; i < clients.length; i++) {
         clients[i].write(`Client ${clients.indexOf(socket).toString()} Connected\n`);
     }
@@ -19,6 +23,10 @@ let server = net.createServer(socket => {
     });
     socket.on('end', () => {
         console.log(`Client ${clients.indexOf(socket).toString()} Disconnected.`);
+        messages.push(`Client ${clients.indexOf(socket).toString()} Disconnected.\n`);
+        fs.writeFile('data.txt', messages, 'utf8', function (err) {
+            if (err) return console.log(err);
+        });
         for (let i = 0; i < clients.length; i++) {
             if (clients[i] != clients[clients.indexOf(socket)]) {
                 clients[i].write(`Client ${clients.indexOf(socket).toString()} Disconnected.`);
