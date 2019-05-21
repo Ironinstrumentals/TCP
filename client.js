@@ -8,19 +8,15 @@ client.on('data', (data) => {
 client.on('end', () => {
     console.log('Server Terminated.');
     client.end();
-    console.clear();
     process.exit();
-
 });
 client.on('error', () => {
     console.log('error occurred.');
     client.end();
 });
-
 process.stdin.setEncoding('utf8');
 process.stdin.on('readable', () => {
     let chunk;
-    // Use a loop to make sure we read all available data.
     while ((chunk = process.stdin.read()) !== null) {
         client.write(chunk);
         if(chunk.toString().trim() == 'quit'){

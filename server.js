@@ -15,7 +15,6 @@ let server = net.createServer(socket => {
         messages.push(`Client ${clients.indexOf(socket).toString()}: ${data}`);
         fs.writeFile('data.txt', messages, 'utf8', function (err) {
             if (err) return console.log(err);
-            // console.log('Messages Logged.');
         });
     });
     socket.on('end', () => {
@@ -25,7 +24,6 @@ let server = net.createServer(socket => {
                 clients[i].write(`Client ${clients.indexOf(socket).toString()} Disconnected.`);
             }
         }
-        // console.log(`Client ${clients.indexOf(socket).toString()} Disconnected.`);
         clients.splice(clients.indexOf(socket));
     });
 }).listen(5000);
